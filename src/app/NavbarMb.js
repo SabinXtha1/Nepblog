@@ -15,11 +15,11 @@ import { UserButton } from "@clerk/nextjs";
 
 const NavbarMb = ({open,onOpenChange,items,pathname,isUserLogin}) => {
   return (
-  <Sheet open={open} onOpenChange={onOpenChange}>
-  <SheetTrigger>
+  <Sheet open={open} onOpenChange={onOpenChange}  >
+  <SheetTrigger >
     <MenuIcon/>
   </SheetTrigger>
-  <SheetContent>
+  <SheetContent side="left">
     <SheetHeader className={'border-b'}>
       <div className="flex items-center gap-2">
 <UserButton/>

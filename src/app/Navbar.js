@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react'
 
 import { LogIn, LogInIcon } from 'lucide-react'
 import NavbarMb from './NavbarMb'
+import { ThemeToggle } from '@/components/theme-toggle'
 const Navbar = () => {
    const { user, isLoaded, isSignedIn } = useUser();
     const [isSidebarOpen, setisSidebarOpen] =useState(false)
@@ -49,16 +50,18 @@ const NavLists=[
     <h1 className=' text-2xl font-bold '>
         BlogNep
     </h1>
+    <div className='flex items-center gap-4'> 
+
       <div className=' text-xl font-semibold md:flex gap-4 hidden '>
         {NavLists.map((item)=>{
-return (
-    <Link key={item.link} href={item.link}>
+            return (
+                <Link key={item.link} href={item.link}>
         <Button variant='link' className={cn(pathname==item.link?'underline':'','')} >
             {item.name}
         </Button>
     </Link>
 )
-        })}
+})}
         {
             isUserLogin? <UserButton/>:<div className='flex items-center gap-4'> <Link href={'/sign-in'} className='flex items-center gap-2' >
                 <LogIn/>
@@ -70,7 +73,9 @@ return (
        <div className=' flex md:hidden'>
       <NavbarMb open={isSidebarOpen} onOpenChange={setisSidebarOpen} items={NavLists} pathname={pathname} isUserLogin={isUserLogin} />
        </div>
+         <ThemeToggle />
       
+        </div>
       
    </nav>
   )

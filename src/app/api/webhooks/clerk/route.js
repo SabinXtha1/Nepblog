@@ -1,6 +1,8 @@
 // /app/api/webhooks/clerk/route.ts
 import { connectDB } from "@/app/db/db";
 import { User } from "@/app/db/dbSchema";
+
+
 import { NextResponse } from "next/server";
 
 
@@ -13,11 +15,14 @@ export async function POST(req) {
 
   if (body.type === "user.created") {
     const user = body.data;
+    console.log(user.email_addresses[0].email_address);
+    
 
     // Example: Make API hit or save user to DB
     // await saveUserToDB(user);
     await User.create({
-        name:user.firstName,
+        name:user.username,
+       email:user.email_addresses[0].email_address
         
     })
 
