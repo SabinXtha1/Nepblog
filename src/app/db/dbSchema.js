@@ -1,4 +1,4 @@
-import { Images } from 'lucide-react';
+
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -64,6 +64,10 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  authorName:{
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,

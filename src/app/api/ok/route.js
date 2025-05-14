@@ -1,31 +1,24 @@
- import {currentUser} from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { Post, User } from "@/app/db/dbSchema";
 import { NextResponse } from "next/server";
+import { connectDB } from "@/app/db/db";
 
-
-
+connectDB();
 
 export async function GET(req) {
-  
-  const username =await currentUser();
-console.log(username.username);
+  const username = await currentUser();
+  console.log(username.username);
 
   try {
-   const user =await User.findOne({
-    name:username.username   }) 
-   console.log(user);
-   
-   const posts = await Post.create({
-    title:'zkddgfdgfdgsrgerger',
-      content:'Hello uys',
-      author:user._id,
-   })
-   await User.findByIdAndUpdate(user._id, {
-  $push: { posts: posts }
-});
-
+    const user = await User.findOne({
+      name: username.username,
+    });
+    console.log(user);
+    const posts = await Post.find({
+      author: user._id,
+    });
+    console.log(posts);
     return NextResponse.json({
-    
       posts,
     });
   } catch (error) {
@@ -34,39 +27,36 @@ console.log(username.username);
   }
 }
 
+export async function POST(req) {
+  const { title, content } = await req.json();
+  console.log(title, content);
+  const user = await currentUser();
+  console.log(user.username);
+  const userId = await User.findOne({
+    name: user.username,
+  });
+  console.log(userId._id, userId.name);
 
+  try {
+    const post = await Post.create({
+      title,
+      content,
+      author: userId._id,
+      authorName: userId.name,
+    });
+    console.log(post);
 
-export  async function POST(req){
-   
-    const {title, content} = await req.json();
-    console.log(title, content);
-    const user = await currentUser();
-        console.log(user.username);
-        const userId = await User.findOne({
-           name:user.username
-        })
-        try{
-
-          const post = await Post.create({
-            title,
-            content,
-            author:userId._id
-          })
-          console.log(post);
-          
-          await User.findByIdAndUpdate(userId._id, {
-            $push: { posts: post }
-          });
-          return NextResponse.json({
-            message:"Post created",
-            post
-          })
-        }catch(er){
-          return NextResponse.json({
-            message:"Error creating post",
-            error:er
-          })
-        }
-   
-    
+    await User.findByIdAndUpdate(userId._id, {
+      $push: { posts: post },
+    });
+    return NextResponse.json({
+      message: "Post created",
+      post,
+    });
+  } catch (er) {
+    return NextResponse.json({
+      message: "Error creating post",
+      error: er,
+    });
+  }
 }

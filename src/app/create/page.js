@@ -1,4 +1,6 @@
 'use client'
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import axios from 'axios';
 import React from 'react'
 
@@ -25,13 +27,13 @@ const page = () => {
         minLength={3}
       />
 
-      <textarea
+      <Textarea
         name="content"
         placeholder="Content"
       
         required
         minLength={10}
-      ></textarea>
+      ></Textarea>
 
       <button type="submit">Submit</button>
     </form>
