@@ -4,11 +4,13 @@ import { cn } from "@/lib/utils"
 
 function Input({
   className,
+  onChange,
   type,
   ...props
 }) {
   return (
     <input
+      onChange={onChange}
       type={type}
       data-slot="input"
       className={cn(

@@ -28,7 +28,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const { title, content } = await req.json();
+  const { title, content ,images} = await req.json();
   console.log(title, content);
   const user = await currentUser();
   console.log(user.username);
@@ -43,6 +43,7 @@ export async function POST(req) {
       content,
       author: userId._id,
       authorName: userId.name,
+      images:images
     });
     console.log(post);
 

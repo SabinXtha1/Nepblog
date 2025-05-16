@@ -2,15 +2,21 @@
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import axios from 'axios';
-import React from 'react'
+import { CldUploadWidget } from 'next-cloudinary';
+import React, { useEffect, useState } from 'react'
+import UploadImage from '@/components/uploadImage';
 
-
-const page = () => {
+const Page = () => {
+  const [Images,setImages]= useState([])
+ console.log(Images);
+ 
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
          const send = await axios.post('/api/ok',{
             title:e.target.title.value,
             content:e.target.content.value,
+            images:Images
         })
         console.log(send);
         
@@ -26,6 +32,7 @@ const page = () => {
         required
         minLength={3}
       />
+    <UploadImage setImages={setImages}/>
 
       <Textarea
         name="content"
@@ -41,4 +48,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

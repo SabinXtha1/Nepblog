@@ -7,7 +7,7 @@ export async function PUT(req) {
   await connectDB();
 
   try {
-    const { title, content, blogId } = await req.json();
+    const { title, content, blogId,images } = await req.json();
 
     if (!title || !content || !blogId) {
       return NextResponse.json(
@@ -30,8 +30,9 @@ export async function PUT(req) {
       blogId,
       {
         $set: {
-          title:'Hero Sabin esHero',
+          title,
           content,
+          images,
           author: userId._id,
           authorName: userId.name,
         },
