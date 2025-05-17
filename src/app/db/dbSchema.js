@@ -60,6 +60,7 @@ const postSchema = new Schema({
     type: Array,
     default: []
     },
+    
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
