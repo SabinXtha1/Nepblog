@@ -11,6 +11,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Navbar from './Navbar'
 import { ThemeProvider } from 'next-themes'
+import { ToastContainer } from 'react-toastify'
 
 
 const geistSans = Geist({
@@ -39,6 +40,7 @@ export default function RootLayout({
                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                 
       <Navbar/>
+      <ToastContainer/>
           {children}
                </ThemeProvider>
         </body>

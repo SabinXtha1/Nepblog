@@ -3,11 +3,11 @@ import { Post, User } from "@/app/db/dbSchema";
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/db/db";
 
+await connectDB();
 export async function PUT(req) {
-  await connectDB();
 
   try {
-    const { title, content, blogId,images } = await req.json();
+    const { title, content , blogId ,images ,category ,featured} = await req.json();
 
     if (!title || !content || !blogId) {
       return NextResponse.json(
@@ -33,8 +33,11 @@ export async function PUT(req) {
           title,
           content,
           images,
+          category,
+          featured,
           author: userId._id,
           authorName: userId.name,
+          authorImage: user.imageUrl
         },
       },
       { new: true } // return the updated post
@@ -56,3 +59,18 @@ export async function PUT(req) {
     }, { status: 500 });
   }
 }
+ export async function GET(req){
+  try{
+    const {searchParams} = new URL(req.url);
+    const postId = searchParams.get("id")
+    const data = await Post.findById(postId)
+    return NextResponse.json({
+      post: data,
+    });
+
+  }catch(error){
+    console.error("Error in GEt route:", error);
+    return NextResponse.json({ message: "Error in POST route" }, { status: 500 });
+  }
+ }
+

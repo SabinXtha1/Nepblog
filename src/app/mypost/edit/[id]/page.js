@@ -1,36 +1,67 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { ImageIcon, Loader2Icon, PlusIcon, XIcon } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-// import { toast } from "@/components/ui/use-toast"
-// import { ToastAction } from "@/components/ui/toast"
 import UploadImage from "@/components/uploadImage"
+import { toast } from "react-toastify"
 
 const CreatePostPage = () => {
+  const { id } = useParams()
   const router = useRouter()
-  const [images,        setImages        ] = useState([])
-  const [title,         setTitle        ] = useState("")
-  const [content,       setContent         ] = useState("")
-  const [category,      setCategory         ] = useState("")
-  const [featured,      setFeatured        ] = useState(false)
-  const [isSubmitting,  setIsSubmitting    ] = useState(false)
-  const [previewImages, setPreviewImages   ] = useState([])
 
-  // This function would be called by the UploadImage component
+  const [images, setImages] = useState([])
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
+  const [category, setCategory] = useState("")
+  const [featured, setFeatured] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [previewImages, setPreviewImages] = useState([])
+
+  const fetchDataById = async () => {
+    try {
+      const res = await axios(`/api/change?id=${id}`)
+      const resData = res.data.post
+      setTitle(resData.title)
+      setContent(resData.content)
+      setCategory(resData.category)
+      setFeatured(resData.featured)
+      setImages(resData.images || [])
+      setPreviewImages(resData.images || [])
+    } catch (err) {
+      console.error("Error fetching data by ID:", err)
+    }
+  }
+
+  useEffect(() => {
+    fetchDataById()
+  }, [id])
+
   const handleImagesChange = (newImages) => {
     setImages(newImages)
-    // Create preview URLs for the images
     setPreviewImages(newImages)
   }
 
@@ -49,35 +80,31 @@ const CreatePostPage = () => {
     setIsSubmitting(true)
 
     try {
-      const response = await axios.post("/api/ok", {
+      const response = await axios.put("/api/change", {
         title,
         content,
         images,
         category,
         featured,
+        blogId: id,
       })
-        setImages([])       
-setTitle([])        
-setContent('')      
-setCategory ('')    
-setFeatured(false)     
-setIsSubmitting ('')
-setPreviewImages('')
-      // toast({
-      //   title: "Post created successfully!",
-      //   description: "Your post has been published.",
-      //   action: <ToastAction altText="View Post">View Post</ToastAction>,
-      // })
 
-      // Redirect to the posts page after successful creation
-      // router.push("/") // Assuming the posts page is the home page
+   
+        // Clear form
+        setTitle("")
+        setContent("")
+        setCategory("")
+        setFeatured(false)
+        setImages([])
+        setPreviewImages([])
+
+        toast.success("Post updated successfully!")
+        router.back() 
+        // // Optional: go back after update
+    
     } catch (error) {
-      console.error("Error creating post:", error)
-      // toast({
-      //   title: "Error creating post",
-      //   description: error.message || "Something went wrong. Please try again.",
-      //   variant: "destructive",
-      // })
+      console.error("Error updating post:", error)
+      toast.error("Error updating post: " + (error.response?.data?.message || error.message))
     } finally {
       setIsSubmitting(false)
     }
@@ -86,14 +113,14 @@ setPreviewImages('')
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold tracking-tight">Create New Post</h1>
-        <p className="text-muted-foreground mt-2">Share your thoughts, ideas, and inspirations</p>
+        <h1 className="text-3xl font-bold tracking-tight">Edit Post</h1>
+        <p className="text-muted-foreground mt-2">Update your ideas and inspirations</p>
       </div>
 
       <Card className="border-slate-200 shadow-md">
         <CardHeader>
           <CardTitle>Post Details</CardTitle>
-          <CardDescription>Fill in the information below to create your new post</CardDescription>
+          <CardDescription>Update your blog post details below</CardDescription>
         </CardHeader>
 
         <form onSubmit={handleSubmit}>
@@ -136,20 +163,22 @@ setPreviewImages('')
               </Select>
             </div>
 
-            {/* Featured Post Toggle */}
+            {/* Featured Toggle */}
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label htmlFor="featured" className="text-base">
                   Featured Post
                 </Label>
-                <p className="text-sm text-muted-foreground">Featured posts appear at the top of your blog</p>
+                <p className="text-sm text-muted-foreground">
+                  Featured posts appear at the top of your blog
+                </p>
               </div>
               <Switch id="featured" checked={featured} onCheckedChange={setFeatured} />
             </div>
 
             <Separator />
 
-            {/* Content Textarea */}
+            {/* Content Input */}
             <div className="space-y-2">
               <Label htmlFor="content" className="text-base">
                 Post Content
@@ -168,13 +197,17 @@ setPreviewImages('')
 
             {/* Image Upload */}
             <div className="space-y-4">
+
+              {/* Preview Images */}
+              {previewImages.length > 0 && (
+                <div>
               <div className="flex items-center justify-between">
                 <Label className="text-base">Images</Label>
-                <p className="text-sm text-muted-foreground">Upload images to enhance your post</p>
+                <p className="text-sm text-muted-foreground">
+                  Upload images to enhance your post
+                </p>
               </div>
-
-              {/* Image Previews */}
-              {previewImages.length > 0 && (
+                
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
                   {previewImages.map((image, index) => (
                     <div
@@ -196,16 +229,17 @@ setPreviewImages('')
                     </div>
                   ))}
                 </div>
-              )}
+              </div>
+              )
+              }
 
-              {/* Upload Widget */}
-              <div className="border-2 border-dashed border-slate-200 rounded-lg p-6 text-center">
+              {/* <div className="border-2 border-dashed border-slate-200 rounded-lg p-6 text-center">
                 <UploadImage setImages={handleImagesChange} />
                 <div className="mt-2 flex items-center justify-center text-sm text-muted-foreground">
                   <ImageIcon className="mr-2 h-4 w-4" />
                   <p>Upload images to enhance your post</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </CardContent>
 
@@ -221,12 +255,12 @@ setPreviewImages('')
               {isSubmitting ? (
                 <>
                   <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
-                  Publishing...
+                  Editing...
                 </>
               ) : (
                 <>
                   <PlusIcon className="mr-2 h-4 w-4" />
-                  Publish Post
+                  Edit Post
                 </>
               )}
             </Button>
@@ -235,7 +269,7 @@ setPreviewImages('')
       </Card>
 
       <div className="mt-6 text-center text-sm text-muted-foreground">
-        <p>Posts will be published immediately. You can edit them later from your dashboard.</p>
+        <p>Changes will be applied immediately.</p>
       </div>
     </div>
   )

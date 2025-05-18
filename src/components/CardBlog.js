@@ -3,29 +3,47 @@ import { Card, CardContent, CardFooter, CardHeader } from './ui/card'
 import { Badge, Calendar, Clock } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 
-const CardBlog = ({ data }) => {
+const CardBlog = ({ data,total }) => {
   console.log(data, "IN");
 
   return (
     <div>
       <div className="mx-auto grid max-w-6xl gap-8 pt-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {data && data.length > 0 ? data.map((item, key) => (
+        {
+          typeof total !="number*9"
+        }
+        {data && data.length > 0 ? data.slice(0,total).map((item, key) => (
           <Card className="overflow-hidden gap-2 flex flex-col" key={key}>
             <div className='w-full flex justify-center items-center px-4'>
 
                 <div className='relative w-[100%] aspect-video overflow-hidden rounded-l'>
 
               <Image
-                src={item.images?.[0] || "/placeholder.svg"}
+                src={item.images?.[0] || "/image.jpg"}
                 fill
                 alt="Blog post thumbnail"
                 className=" object-cover"
                 />
                 </div>
                 </div>
+                <div className='flex items-center px-4 pt-2 gap-3'>
+            {item.authorName !== "" && item.authorImage ? (
+              <Avatar>
+  <AvatarImage src={item.authorImage} alt="@shadcn" className='rounded-full w-4 h-4'/>
+  <AvatarFallback>{item.authorName}</AvatarFallback>
+</Avatar>
+
+  
+) : null}
+                  <p>
+                    {item.authorName}
+                  </p>
+
+                </div>
             <CardHeader className="px-4">
-              <h3 className="text-3xl font-bold">
+              <h3 className="text-2xl font-bold">
                 {item.title}
               </h3>
             </CardHeader>

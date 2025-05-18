@@ -17,10 +17,10 @@ const home = ({data}) => {
                 </p>
               </div>
             </div>
-            <CardBlog data={data}/>
+            <CardBlog data={data} total={5}/>
             
             <div className="flex justify-center mt-10">
-              <Link href="/blog">
+              <Link href="/allblog">
                 <Button variant="outline">
                   View All Articles
                   <ArrowRight className="ml-2 h-4 w-4" />

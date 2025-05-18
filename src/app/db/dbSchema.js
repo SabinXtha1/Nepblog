@@ -16,11 +16,6 @@ const userSchema = new Schema({
     unique: true,
     
   },
- 
-  posts: [{
-    type: Schema.Types.String,
-    ref: 'Post'
-  }],
   createdAt: {
     type: Date,
     default: Date.now
@@ -41,6 +36,27 @@ const subscriberSchema = new Schema({
     default: Date.now
   }
 });
+//comment Schema
+const commentSchema = new Schema({
+  postId:{
+    type: Schema.Types.ObjectId,
+    ref: 'Post',
+    required: true
+  },
+  username:{
+    type: String,
+    required: true,
+    trim: true
+  },
+  comment:{
+    type:String,
+    required: true,
+  },
+  userImage:{
+    type: String,
+    
+  }
+})
 
 // Post Schema
 const postSchema = new Schema({
@@ -70,11 +86,26 @@ const postSchema = new Schema({
     type: String,
     required: true,
   },
+  authorImage:{
+    type: String,
+    required:true
+  },
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  category:{
+    type: String,
+    required: true,
+    
+  },
+  featured:{
+    type:Boolean,
+    default: false
   }
+
 });
+
 
 // Create Models
 export const User = mongoose.models.User || mongoose.model('User', userSchema);

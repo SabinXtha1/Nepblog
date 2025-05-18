@@ -28,28 +28,31 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const { title, content ,images} = await req.json();
+  const { title, content ,images,category,featured=false} = await req.json();
   console.log(title, content);
   const user = await currentUser();
   console.log(user.username);
   const userId = await User.findOne({
     name: user.username,
   });
-  console.log(userId._id, userId.name);
+  console.log(userId._id, userId.name,user.imageUrl,featured);
 
   try {
     const post = await Post.create({
       title,
       content,
+      category,
+      featured,
       author: userId._id,
       authorName: userId.name,
+      authorImage:user.imageUrl,
       images:images
     });
     console.log(post);
 
-    await User.findByIdAndUpdate(userId._id, {
-      $push: { posts: post },
-    });
+    // await User.findByIdAndUpdate(userId._id, {
+    //   $push: { posts: post },
+    // });
     return NextResponse.json({
       message: "Post created",
       post,
