@@ -1,4 +1,5 @@
 'use client'
+import CarsBlogSkeleton from '../components/CardBlogSkeleton'
 import React, { useEffect, useState } from 'react'
 import Home from '../components/home'
 
@@ -6,6 +7,7 @@ import Home from '../components/home'
 
 const Page = () => {
   const [data, setdata] = useState()
+  const [loading, setLoading] = useState(true)
   const fetchData = async()=>{
     try{
       const res = await fetch('/api')
@@ -14,6 +16,7 @@ const Page = () => {
       }else{
         const data =await res.json()
         console.log(data);
+        setLoading(false)
         setdata(data.posts)
         
       }
@@ -25,12 +28,18 @@ const Page = () => {
   useEffect(()=>{
  fetchData()
 },[])
+  if(loading){
+    return(
+      <CarsBlogSkeleton/>
+    )
+  }else{
+    return (
+      <div>
+        <Home data={data} />
+      </div>
+    )
+  }
   
-  return (
-    <>
-   <Home data={data} />
-   </>
-  )
 }
 
 export default Page
