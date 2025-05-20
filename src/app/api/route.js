@@ -3,10 +3,10 @@ import { Post } from "@/app/db/dbSchema";
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/db/db";
 
-connectDB();
 
 export async function GET(req) {
-
+  
+ await connectDB();
 
   try {
    

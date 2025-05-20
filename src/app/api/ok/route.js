@@ -3,9 +3,9 @@ import { Post, User } from "@/app/db/dbSchema";
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/db/db";
 
-connectDB();
 
 export async function GET(req) {
+ await connectDB();
   const username = await currentUser();
   console.log(username.username);
 
@@ -28,6 +28,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
+ await connectDB();
   const { title, content ,images,category,featured=false} = await req.json();
   console.log(title, content);
   const user = await currentUser();

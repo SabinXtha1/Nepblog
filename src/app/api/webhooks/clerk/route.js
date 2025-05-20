@@ -6,8 +6,8 @@ import { User } from "@/app/db/dbSchema";
 import { NextResponse } from "next/server";
 
 
-connectDB();
 export async function POST(req) {
+ await connectDB();
   const body = await req.json();
 
   // You can log to see the event
