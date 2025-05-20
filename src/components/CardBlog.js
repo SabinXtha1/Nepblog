@@ -26,7 +26,7 @@ const CardBlog = ({ data, total }) => {
     return blogsToRender.map((item, key) => (
       <Card
         key={key}
-        className="overflow-hidden gap-2 flex flex-col hover:scale-105 transition-all"
+        className="overflow-hidden gap-1 flex flex-col hover:scale-102 scale-98  transition-all"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: key * 0.1 }} 
@@ -42,7 +42,7 @@ const CardBlog = ({ data, total }) => {
             />
           </div>
         </div>
-
+      <Link href={`profile/${item.author}`}>
         <div className="flex items-center px-4 pt-2 gap-3">
           {item.authorName !== "" && item.authorImage ? (
             <Avatar>
@@ -50,12 +50,13 @@ const CardBlog = ({ data, total }) => {
                 src={item.authorImage}
                 alt={item.authorName}
                 className="rounded-full w-4 h-4"
-              />
+                />
               <AvatarFallback>{item.authorName[0]}</AvatarFallback>
             </Avatar>
           ) : null}
           <p>{item.authorName}</p>
         </div>
+          </Link>
 
         <CardHeader className="px-4">
           <h3 className="text-2xl font-bold">{item.title}</h3>

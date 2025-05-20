@@ -80,7 +80,9 @@ const Navbar = () => {
         isVisible ? "translate-y-0" : "-translate-y-full",
       )}
       >
+        <Link href={"/"}>
         <h1 className="text-2xl font-bold">BlogNep</h1>
+        </Link>
         <div className="flex items-center gap-4">
           <div className="text-xl font-semibold md:flex gap-4 hidden">
             {NavLists.map((item) => {

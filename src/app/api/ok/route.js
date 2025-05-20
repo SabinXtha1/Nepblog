@@ -38,6 +38,7 @@ export async function POST(req) {
   console.log(userId._id, userId.name,user.imageUrl,featured);
 
   try {
+   
     const post = await Post.create({
       title,
       content,

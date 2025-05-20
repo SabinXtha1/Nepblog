@@ -2,30 +2,66 @@
 
 import React, { useEffect, useState } from 'react'
 import CardBlog from '@/components/CardBlog'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+
 const Page = () => {
-     const [data, setdata] = useState()
-      const fetchData = async()=>{
-        try{
-          const res = await fetch('/api')
-          if(!res.ok){
-            throw new Error('Failed to fetch data')
-          }else{
-            const data =await res.json()
-            console.log(data);
-            setdata(data.posts)
-            
-          }
-        }catch(er){
-          console.log(er);
-          
-        }
-      }
-      useEffect(()=>{
-     fetchData()
-    },[])
+  const [data, setData] = useState([])
+  const [filtered, setFiltered] = useState([])
+  const [category, setCategory] = useState('')
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch('/api')
+      if (!res.ok) throw new Error('Failed to fetch data')
+
+      const resData = await res.json()
+      setData(resData.posts)
+      setFiltered(resData.posts)
+    } catch (er) {
+      console.error(er)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    if (!category || category === 'All') {
+      setFiltered(data)
+    } else {
+      const filteredData = data.filter(post => post.category === category)
+      setFiltered(filteredData)
+    }
+  }, [category, data])
+
   return (
-    <div>
-        <CardBlog data={data} />
+    <div className='px-6 py-4 space-y-4 flex flex-col'>
+      {/* Category Filter */}
+      <div className='flex justify-end'>
+
+      <Select onValueChange={(value) => setCategory(value)}>
+        <SelectTrigger className="w-[200px]">
+          <SelectValue placeholder="Filter by category" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="All">All</SelectItem>
+          <SelectItem value="Technology">Technology</SelectItem>
+          <SelectItem value="Lifestyle">Lifestyle</SelectItem>
+          <SelectItem value="Travel">Travel</SelectItem>
+          <SelectItem value="Food">Food</SelectItem>
+          <SelectItem value="Health">Health</SelectItem>
+          <SelectItem value="Business">Business</SelectItem>
+          <SelectItem value="Other">Other</SelectItem>
+        </SelectContent>
+      </Select>
+      </div>
+
+      {/* Blog Cards */}{filtered.length === 0 ? (
+  <p className="text-muted-foreground">No blogs found in this category.</p>
+) : (
+  <CardBlog data={filtered} />
+)}
     </div>
   )
 }

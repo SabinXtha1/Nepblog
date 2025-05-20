@@ -22,7 +22,8 @@ export async function POST(req) {
     // await saveUserToDB(user);
     await User.create({
         name:user.username,
-       email:user.email_addresses[0].email_address
+       email:user.email_addresses[0].email_address,
+       userImage:user.imageUrl
         
     })
 

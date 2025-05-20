@@ -99,7 +99,7 @@ const CreatePostPage = () => {
         setPreviewImages([])
 
         toast.success("Post updated successfully!")
-        router.back() 
+        // router.back() 
         // // Optional: go back after update
     
     } catch (error) {

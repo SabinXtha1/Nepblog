@@ -1,17 +1,17 @@
-
+// layout.js
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Footer from "../components/Footer"
 import {
   ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
+ 
 } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-import Navbar from './Navbar'
+import Navbar from '../components/Navbar'
 import { ThemeProvider } from 'next-themes'
 import { ToastContainer } from 'react-toastify'
+
 
 
 const geistSans = Geist({
@@ -34,15 +34,17 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      
+        
       <html lang="en" suppressHydrationWarning>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
+        
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased `} >
                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                 
       <Navbar/>
       <ToastContainer/>
           {children}
                </ThemeProvider>
+          <Footer/>
         </body>
       </html>
     </ClerkProvider>

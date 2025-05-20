@@ -1,3 +1,4 @@
+import { type } from 'os';
 
 
 const mongoose = require('mongoose');
@@ -16,10 +17,13 @@ const userSchema = new Schema({
     unique: true,
     
   },
+  userImage:{
+    type:String
+  },
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
 });
 
 // Subscriber Schema
@@ -38,11 +42,7 @@ const subscriberSchema = new Schema({
 });
 //comment Schema
 const commentSchema = new Schema({
-  postId:{
-    type: Schema.Types.ObjectId,
-    ref: 'Post',
-    required: true
-  },
+ 
   username:{
     type: String,
     required: true,
@@ -84,11 +84,11 @@ const postSchema = new Schema({
   },
   authorName:{
     type: String,
-    required: true,
+   
   },
   authorImage:{
     type: String,
-    required:true
+    
   },
   createdAt: {
     type: Date,
@@ -96,13 +96,14 @@ const postSchema = new Schema({
   },
   category:{
     type: String,
-    required: true,
+  
     
   },
   featured:{
     type:Boolean,
     default: false
-  }
+  },
+  comments:[commentSchema],
 
 });
 

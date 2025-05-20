@@ -5,9 +5,9 @@ import { connectDB } from "@/app/db/db";
 
 await connectDB();
 export async function PUT(req) {
-
   try {
-    const { title, content , blogId ,images ,category ,featured} = await req.json();
+    const { title, content, blogId, images, category, featured } =
+      await req.json();
 
     if (!title || !content || !blogId) {
       return NextResponse.json(
@@ -25,7 +25,7 @@ export async function PUT(req) {
     if (!userId) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
-
+  
     const updatedPost = await Post.findByIdAndUpdate(
       blogId,
       {
@@ -35,13 +35,14 @@ export async function PUT(req) {
           images,
           category,
           featured,
-          author: userId._id,
-          authorName: userId.name,
-          authorImage: user.imageUrl
+          // author: userId._id,
+          // authorName: userId.name,
+          // authorImage: user.imageUrl
         },
       },
       { new: true } // return the updated post
     );
+
 
     if (!updatedPost) {
       return NextResponse.json({ message: "Post not found" }, { status: 404 });
@@ -53,24 +54,66 @@ export async function PUT(req) {
     });
   } catch (er) {
     console.error(er);
-    return NextResponse.json({
-      message: "Error updating post",
-      error: er.message || er,
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: "Error updating post",
+        error: er.message || er,
+      },
+      { status: 500 }
+    );
   }
 }
- export async function GET(req){
-  try{
-    const {searchParams} = new URL(req.url);
-    const postId = searchParams.get("id")
-    const data = await Post.findById(postId)
+export async function GET(req) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const postId = searchParams.get("id");
+    const data = await Post.findById(postId);
     return NextResponse.json({
       post: data,
     });
-
-  }catch(error){
+  } catch (error) {
     console.error("Error in GEt route:", error);
-    return NextResponse.json({ message: "Error in POST route" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Error in POST route" },
+      { status: 500 }
+    );
   }
- }
+}
+export async function POST(req) {
+  const user = await currentUser();
 
+  try {
+    const { blogId, comment } = await req.json();
+
+    const newComment = {
+      username: user.username,
+      comment: comment,
+      userImage: user.imageUrl,
+    };
+    const userPost = await Post.findById(
+      blogId,
+    );
+    console.log(userPost);
+
+    userPost.comments.push(newComment);
+    await userPost.save();
+
+    if (!userPost) {
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      message: "Post updated",
+      post: userPost,
+    });
+  } catch (er) {
+    console.error(er);
+    return NextResponse.json(
+      {
+        message: "Error updating post",
+        error: er.message || er,
+      },
+      { status: 500 }
+    );
+  }
+}
