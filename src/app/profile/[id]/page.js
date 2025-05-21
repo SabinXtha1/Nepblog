@@ -36,7 +36,7 @@ const UserProfilePage = () => {
 
   if (!user) return <p className="text-center mt-10 text-muted-foreground">User not found.</p>
 
-  const profileImage = user.userImage || '/user.png'
+  const profileImage = user.userImage || '/bigo.gif'
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
@@ -78,8 +78,22 @@ const UserProfilePage = () => {
               <Link
                 key={post._id}
                 href={`/blog/${post._id}`}
-                className="border p-4 rounded-xl hover:shadow-md transition"
+                className="border p-4 rounded-xl hover:shadow-md gap-8  flex transition"
               >
+                <div>
+                  
+                  
+ <div className="relative h-[100%] aspect-video overflow-hidden rounded-l">
+            <Image
+              src={post.images?.[0] || "/image.jpg"}
+              fill
+              alt="Blog post thumbnail"
+              className="object-cover"
+            />
+          </div>
+                </div>
+                <div>
+
                 <h3 className="text-lg font-semibold">{post.title}</h3>
                 <p className="text-sm text-muted-foreground mb-1">
                   {post.category || "Uncategorized"}
@@ -91,6 +105,7 @@ const UserProfilePage = () => {
                   <Calendar className="w-4 h-4" />
                   {new Date(post.createdAt).toLocaleDateString()}
                 </p>
+                </div>
               </Link>
             ))}
           </div>

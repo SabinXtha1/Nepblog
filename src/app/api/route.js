@@ -6,10 +6,10 @@ import { connectDB } from "@/app/db/db";
 
 export async function GET(req) {
   
- await connectDB();
+ 
 
   try {
-   
+   await connectDB()
     const posts = await Post.find({ });
     console.log(posts);
     return NextResponse.json({

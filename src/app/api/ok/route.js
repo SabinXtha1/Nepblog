@@ -5,11 +5,12 @@ import { connectDB } from "@/app/db/db";
 
 
 export async function GET(req) {
- await connectDB();
+ 
   const username = await currentUser();
   console.log(username.username);
 
   try {
+    await connectDB()
     const user = await User.findOne({
       name: username.username,
     });
@@ -28,7 +29,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
- await connectDB();
+ 
   const { title, content ,images,category,featured=false} = await req.json();
   console.log(title, content);
   const user = await currentUser();
@@ -39,7 +40,7 @@ export async function POST(req) {
   console.log(userId._id, userId.name,user.imageUrl,featured);
 
   try {
-   
+   await connectDB()
     const post = await Post.create({
       title,
       content,

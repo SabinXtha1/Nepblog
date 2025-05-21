@@ -4,11 +4,12 @@ import { User, Post } from "@/app/db/dbSchema";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
-  await connectDB();
+  
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 
   try {
+    await connectDB()
     const user = await User.findById(id);
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });

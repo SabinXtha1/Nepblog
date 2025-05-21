@@ -4,8 +4,9 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/app/db/db";
 
 export async function PUT(req) {
-  await connectDB();
+
   try {
+    await connectDB()
     const { title, content, blogId, images, category, featured } =
       await req.json();
 
@@ -64,8 +65,9 @@ export async function PUT(req) {
   }
 }
 export async function GET(req) {
- await connectDB();
+ 
   try {
+    await connectDB()
     const { searchParams } = new URL(req.url);
     const postId = searchParams.get("id");
     const data = await Post.findById(postId);
@@ -81,10 +83,11 @@ export async function GET(req) {
   }
 }
 export async function POST(req) {
-  await connectDB();
+ 
   const user = await currentUser();
 
   try {
+    await connectDB()
     const { blogId, comment } = await req.json();
 
     const newComment = {

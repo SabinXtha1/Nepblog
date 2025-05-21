@@ -1,29 +1,49 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { connectDB } from "@/app/db/db";
+import { Post, User } from "@/app/db/dbSchema";
 import { NextResponse } from "next/server";
 
 export async function POST(req){
-    const {prompt}= await req.json();
+    
+    // const Users=await User.create({
+    //     name:"SΛB1ΩИ",
+    //     email:"SΛB1ΩИROBO@gmail.com",
+    //     userImage:"/allien.webp",
+    
+    // })
+    // console.log(Users);
+    
+    
+    const data = await req.text()
+    const splitData = data.split("{}");
+    console.log(splitData);
+    const cleanString = data.replace(/```json|```/g, '').trim();
+    
+    // 3. Parse the JSON
+    const jsonData = JSON.parse(cleanString);
+    
+    // 4. Get the `content` field
+    const content = jsonData.content;
+    console.log(content);
     try{
-        const genAI= new GoogleGenerativeAI({apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY});
-        const model = genAI.getGenerativeModel({
-            model: "gemini-pro",
-            
-        });
-        const genMsg= await model.generateContent(prompt)
-        const res =await genMsg.response;
-       const output =await res.text()
+        await connectDB()
+        const Posts=await Post.create({
+            title:jsonData.title,
+            content:jsonData.content,
+            author:"682dcf0432ec9b12fd729640",
+            authorName:"SΛB1ΩИ",
+            authorImage:"/allien.webp"
 
-
-
-   return NextResponse.json({
-        message:output,
+        })
+        console.log(Posts);
         
-   })
-    }catch{
+        return NextResponse({
+            msg:Posts
+        })
+          
+     }catch{
         return NextResponse.json({
-            message: "Error in generate route",
-        }, { status: 500 });
-
-    }
+            msg:"Failed to Make POst"
+        })
+     }
 
 }
