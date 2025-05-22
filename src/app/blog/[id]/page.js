@@ -15,6 +15,7 @@ import  { useRouter } from 'next/navigation'
 import RelatedBlog from '@/components/RelatedBlog'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import Link from 'next/link'
 
 const Page = () => {
   // inside the component after blog.comments section
@@ -100,20 +101,20 @@ const handleSubmitComment = async () => {
       {blog.images?.length > 0 && <SlickSlider data={blog.images} />}
 
       {/* Author Section */}
-      
+      <Link href={`profile/${blog.author}`}>
       <motion.div 
         className="flex items-center gap-4 mt-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-      >
+        >
         {blog.authorImage && blog.authorName && (
           <Avatar className="w-10 h-10">
             <AvatarImage
               src={blog.authorImage}
               alt={blog.authorName}
               className="rounded-full"
-            />
+              />
             <AvatarFallback>{blog.authorName[0]}</AvatarFallback>
           </Avatar>
         )}
@@ -125,6 +126,7 @@ const handleSubmitComment = async () => {
           </div>
         </div>
       </motion.div>
+              </Link>
 
       {/* Title */}
       <motion.h1
@@ -166,6 +168,7 @@ const handleSubmitComment = async () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 * index }}
             >
+              <Link href={`profile/${item.author}`} className="rounded-full object-cover">
               <Image
                 src={item.userImage}
                 alt={item.username}
@@ -173,8 +176,11 @@ const handleSubmitComment = async () => {
                 height={40}
                 className="rounded-full object-cover"
                 />
+                </Link>
               <div>
+                  <Link href={`profile/${item.author}`}>
                 <p className="font-medium">{item.username}</p>
+              </Link>
                 <p className="text-muted-foreground text-sm">{item.comment}</p>
               </div>
             </motion.div>

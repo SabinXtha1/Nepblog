@@ -55,6 +55,9 @@ const commentSchema = new Schema({
   userImage:{
     type: String,
     
+  },
+  userId:{
+    type:String
   }
 })
 

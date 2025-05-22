@@ -90,14 +90,15 @@ export async function POST(req) {
     await connectDB()
     const { blogId, comment } = await req.json();
 
+    const userPost = await Post.findById(
+      blogId,
+    );
     const newComment = {
       username: user.username,
       comment: comment,
       userImage: user.imageUrl,
+      userId:userPost.author
     };
-    const userPost = await Post.findById(
-      blogId,
-    );
     console.log(userPost);
 
     userPost.comments.push(newComment);

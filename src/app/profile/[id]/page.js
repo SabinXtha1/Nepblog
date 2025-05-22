@@ -41,6 +41,7 @@ const UserProfilePage = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       {/* User Profile */}
+      
       <motion.div
         className="text-center mb-10"
         initial={{ opacity: 0 }}
