@@ -36,8 +36,6 @@ const UserProfilePage = () => {
 
   if (!user) return <p className="text-center mt-10 text-muted-foreground">User not found.</p>
 
-  const profileImage = user.userImage || '/bigo.gif'
-
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       {/* User Profile */}
@@ -51,7 +49,7 @@ const UserProfilePage = () => {
     
         <div className="mx-auto w-24 h-24 my-auto rounded-full overflow-hidden mb-4">
           <Image
-            src={profileImage}
+            src={user.userImage || '/bigo.gif'}
             alt={user.name}
             width={100}
             height={100}
