@@ -168,7 +168,7 @@ const handleSubmitComment = async () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 * index }}
             >
-              <Link href={`/profile/${item.author}`} className="rounded-full object-cover">
+              <Link href={`/profile/${item.userId}`} className="rounded-full object-cover">
               <Image
                 src={item.userImage}
                 alt={item.username}
@@ -178,7 +178,7 @@ const handleSubmitComment = async () => {
                 />
                 </Link>
               <div>
-                  <Link href={`/profile/${item.author}`}>
+                  <Link href={`/profile/${item.userId}`}>
                 <p className="font-medium">{item.username}</p>
               </Link>
                 <p className="text-muted-foreground text-sm">{item.comment}</p>
