@@ -89,9 +89,11 @@ export async function POST(req) {
   try {
     await connectDB()
     const { blogId, comment } = await req.json();
-    const userImg=await User.find({
+    const userImg=await User.findOne({
     email:user.emailAddresses[0].emailAddress
     })
+    console.log(userImg);
+    
     const userPost = await Post.findById(
       blogId,
     );

@@ -40,7 +40,7 @@ export default function ModernFooter() {
   }
 
   return (
-    <footer className="bg-black text-gray-100 border-t mt-10  pt-10">
+    <footer className="bg-black text-gray-100 border-t pt-10">
       <motion.div
         className="container mx-auto px-4 py-12"
         initial="hidden"
@@ -87,7 +87,7 @@ export default function ModernFooter() {
                 <span className="sr-only">Twitter</span>
               </motion.a>
               <motion.a
-                href="#"
+                href="https://www.instagram.com/xtha__sabin/"
                 variants={iconVariants}
                 initial="initial"
                 whileHover="hover"
@@ -118,7 +118,7 @@ export default function ModernFooter() {
               {[
                 { name: "Home", path: "/" },
                 { name: "Contact", path: "/contact" },
-                { name: "Certificates", path: "/certificates" },
+                { name: "Blogs", path: "/allblog" },
               ].map((item, key) => (
                 <motion.li key={key}>
                   <motion.div variants={linkVariants} initial="initial" whileHover="hover">

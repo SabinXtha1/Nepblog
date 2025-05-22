@@ -106,6 +106,9 @@ const postSchema = new Schema({
     type:Boolean,
     default: false
   },
+  readTime:{
+    
+  },
   comments:[commentSchema],
 
 });

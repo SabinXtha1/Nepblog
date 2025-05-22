@@ -55,16 +55,16 @@ const Navbar = () => {
       link: "/",
     },
     {
+      name: "Blog",
+      link: "/allblog",
+    },
+    {
       name: "About",
       link: "/about",
     },
     {
       name: "Contact",
       link: "/contact",
-    },
-    {
-      name: "Blog",
-      link: "/blog",
     },
   ]
 

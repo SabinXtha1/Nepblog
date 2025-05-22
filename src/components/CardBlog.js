@@ -2,11 +2,12 @@
 
 import React from 'react'
 import { Card as BaseCard, CardContent, CardFooter, CardHeader } from './ui/card'
-import { Calendar } from 'lucide-react'
+import { ArrowRight, Calendar } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { motion } from 'framer-motion'
+import { Button } from './ui/button'
 
 // Wrapping Card with motion
 const Card = motion(BaseCard)
@@ -80,8 +81,11 @@ const CardBlog = ({ data, total }) => {
             whileTap={{ scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
-            <Link href={`/blog/${item._id}`} className="text-sm font-medium text-primary">
-              Read More →
+            <Link href={`/blog/${item._id}`} className="text-sm font-medium text-primary group transition-all duration-300 flex items-center">
+              
+              Read More 
+                <ArrowRight className="ml-2 h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" />
+              
             </Link>
           </motion.div>
         </CardFooter>

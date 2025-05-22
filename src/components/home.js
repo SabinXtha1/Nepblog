@@ -9,10 +9,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 const Home = ({ data }) => {
   const [filtered, setFiltered] = useState([])
   const [category, setCategory] = useState('')
+  const [featuredPosts,setFeaturedPosts]= useState([])
 
   // ✅ set filtered data on initial load or when data changes
   useEffect(() => {
     setFiltered(data)
+    setFeaturedPosts(data)
   }, [data])
 
   // ✅ re-filter when category changes
@@ -24,19 +26,18 @@ const Home = ({ data }) => {
       setFiltered(filteredData)
     }
   }, [category, data])
+    useEffect(() => {
+   
+      const filteredData = data.filter(post => post.featured === true)
+      setFeaturedPosts(filteredData)
+    }, [data])
+    console.log(featuredPosts);
+    
 
   return (
     <div>
-      <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 bg-muted/50">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Latest Articles</h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Explore our most recent blog posts on technology, design, and development.
-              </p>
-            </div>
-          </div>
+     
+       
 
           <div className="flex justify-end mt-6">
             <Select onValueChange={(value) => setCategory(value)}>
@@ -67,8 +68,7 @@ const Home = ({ data }) => {
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
+      
     </div>
   )
 }

@@ -97,8 +97,6 @@ const handleSubmitComment = async () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       >
-      {/* Slider */}
-      {blog.images?.length > 0 && <SlickSlider data={blog.images} />}
 
       {/* Author Section */}
       <Link href={`/profile/${blog.author}`}>
@@ -138,6 +136,8 @@ const handleSubmitComment = async () => {
         {blog.title}
       </motion.h1>
 
+          {/* Slider */}
+          {blog.images?.length > 0 && <SlickSlider data={blog.images} />}
       {/* Content */}
       <motion.div
         className="mt-6 text-lg leading-8 text-muted-foreground whitespace-pre-line"

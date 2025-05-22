@@ -36,8 +36,17 @@ const Page = () => {
   }, [category, data])
 
   return (
-    <div className='px-6 py-4 space-y-4 flex flex-col'>
+    <div className='px-6 py-4 space-y-4 flex flex-col pb-20'>
+      <div className=" border-b">
+        <div className="container mx-auto py-8">
+          <h1 className="text-4xl font-bold tracking-tight mb-2">Explore Our Blog</h1>
+          <p className="text-gray-500 text-lg max-w-2xl">
+            Discover the latest articles, insights, and stories from our expert writers
+          </p>
+        </div>
+      </div>
       {/* Category Filter */}
+
       <div className='flex justify-end'>
 
       <Select onValueChange={(value) => setCategory(value)}>

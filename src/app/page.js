@@ -2,6 +2,8 @@
 import CarsBlogSkeleton from '../components/CardBlogSkeleton'
 import React, { useEffect, useState } from 'react'
 import Home from '../components/home'
+import BlogHero from '@/components/Hero'
+import Link from 'next/link'
 
 
 
@@ -28,17 +30,41 @@ const Page = () => {
   useEffect(()=>{
  fetchData()
 },[])
-  if(loading){
-    return(
-      <CarsBlogSkeleton/>
-    )
-  }else{
+ 
     return (
-      <div>
-        <Home data={data} />
+      <div className='w-full'>
+          {
+          loading ? 
+          <CarsBlogSkeleton/>
+          :
+          
+        <BlogHero data={data}/>
+        }
+            <div>
+      <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 bg-muted/50">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Latest Articles</h2>
+              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Explore our most recent blog posts on technology, design, and development.
+              </p>
+            </div>
+          </div>
+
+        {
+          loading ? 
+          <CarsBlogSkeleton/>
+          :
+          <Home data={data} />
+        }
+         
+        </div>
+      </section>
+    </div>
       </div>
     )
-  }
+  
   
 }
 
