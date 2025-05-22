@@ -47,6 +47,7 @@ const UserProfilePage = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
+    
         <div className="mx-auto w-24 h-24 my-auto rounded-full overflow-hidden mb-4">
           <Image
             src={profileImage}

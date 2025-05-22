@@ -23,7 +23,7 @@ export async function POST(req) {
     await User.create({
         name:user.username,
        email:user.email_addresses[0].email_address,
-       userImage:user.imageUrl
+       userImage:user.profile_image_url
         
     })
 

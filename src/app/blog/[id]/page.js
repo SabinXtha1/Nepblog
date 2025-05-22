@@ -90,7 +90,7 @@ const handleSubmitComment = async () => {
   return (
     <div>
 
-    <motion.div
+    <motion.div 
       className="max-w-3xl mx-auto pt-10 px-4"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -100,7 +100,8 @@ const handleSubmitComment = async () => {
       {blog.images?.length > 0 && <SlickSlider data={blog.images} />}
 
       {/* Author Section */}
-      <motion.div
+      
+      <motion.div 
         className="flex items-center gap-4 mt-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
