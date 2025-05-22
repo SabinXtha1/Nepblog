@@ -50,7 +50,7 @@ const UserProfilePage = () => {
         <div className="mx-auto w-24 h-24 my-auto rounded-full overflow-hidden mb-4">
           <Image
             src={user.userImage || '/bigo.gif'}
-            alt={user.name}
+            alt={"Prabesh"}
             width={100}
             height={100}
             className="object-cover"
