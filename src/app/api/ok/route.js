@@ -14,9 +14,11 @@ export async function GET(req) {
     const user = await User.findOne({
       name: username.username,
     });
+    
     console.log(user);
     const posts = await Post.find({
       author: user._id,
+     
     });
     console.log(posts);
     return NextResponse.json({
@@ -70,7 +72,7 @@ export async function POST(req) {
 
 export async function DELETE(req) {
   try {
-    await connectDB(); // ensure DB is connected
+    await connectDB(); 
 
     const { blogId } = await req.json();
 

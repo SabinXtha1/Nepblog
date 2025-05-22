@@ -3,19 +3,45 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { CalendarIcon, EditIcon, BookOpenIcon, ClockIcon } from "lucide-react"
+import { CalendarIcon, EditIcon, BookOpenIcon, ClockIcon, Trash } from "lucide-react"
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 const Page = () => {
   const [posts, setPosts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [featuredPost, setFeaturedPost] = useState(null)
   const [regularPosts, setRegularPosts] = useState([])
+const handleDelete = async (blogId) => {
+  try {
+    const res = await axios.delete('/api/ok', {
+      data: { blogId }, // body goes here
+    });
+
+    if (res.status === 200) {
+      toast.success("Post Deleted");
+
+      // Optionally update UI
+      setPosts((prev) => prev.filter((post) => post._id !== blogId));
+      setRegularPosts((prev) => prev.filter((post) => post._id !== blogId));
+      if (featuredPost && featuredPost._id === blogId) {
+        setFeaturedPost(null);
+      }
+    } else {
+      toast.error("Failed to delete post");
+    }
+  } catch (err) {
+    toast.error("Error deleting post");
+    console.error(err);
+  }
+};
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -188,15 +214,30 @@ const Page = () => {
               {estimateReadTime(featuredPost.content)}
             </div>
           </div>
+          <div className="flex gap-2 flex-col lg:flex-row">
+
           <Button
             asChild
             className="w-fit bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600"
-          >
+            >
             <Link href={`/mypost/edit/${featuredPost._id}`}>
               <EditIcon className="h-4 w-4 mr-2" />
               Edit Featured Post
             </Link>
           </Button>
+           <div onClick={()=>handleDelete(post._id)} className="w-fit bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 rounded-3xl text-white">
+
+                   <Button
+            asChild
+            className="w-fit bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600"
+            >
+            <Link href={`/mypost/edit/${featuredPost._id}`}>
+              <Trash className="h-4 w-4 mr-2" />
+              Delete Featured Post
+            </Link>
+          </Button>
+                      </div>
+            </div>
         </div>
       </div>
     </Card>
@@ -291,6 +332,14 @@ const Page = () => {
                       Edit
                     </Link>
                   </Button>
+                  <div onClick={()=>handleDelete(post._id)}>
+
+                  <Button variant="ghost"
+                  size="sm"
+                  className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300" >
+                   <Trash className="h-4 w-4 mr-2" /> Delete
+                  </Button>
+                      </div>
                 </CardFooter>
               </Card>
             ))}

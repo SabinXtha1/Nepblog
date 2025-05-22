@@ -95,7 +95,19 @@ const Navbar = () => {
               )
             })}
             {isUserLogin ? (
+              <>
+                 <Link  href={'/admin/mypost'}>
+               <Button variant="link" className={cn(pathname === '/admin/mypost' ? "underline" : "", "")}>
+                    MyBlogs
+                  </Button>
+                 </Link>
+                    <Link href={'/admin/create'}>
+                   <Button variant="link" className={cn(pathname === '/admin/create' ? "underline" : "", "")} >
+                   Create Blogs
+                  </Button>
+                    </Link>
               <UserButton />
+              </>
             ) : (
                 <div className="flex items-center gap-4">
                 <Link href={"/sign-in"} className="flex items-center gap-2">
