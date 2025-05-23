@@ -3,11 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import CardBlog from '@/components/CardBlog'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import CardBlogSkeleton from '@/components/CardBlogSkeleton'
 
 const Page = () => {
   const [data, setData] = useState([])
   const [filtered, setFiltered] = useState([])
   const [category, setCategory] = useState('')
+  const [loading,setLoading]= useState(true)
 
   const fetchData = async () => {
     try {
@@ -16,6 +18,7 @@ const Page = () => {
 
       const resData = await res.json()
       setData(resData.posts)
+      setLoading(false)
       setFiltered(resData.posts)
     } catch (er) {
       console.error(er)
@@ -65,12 +68,13 @@ const Page = () => {
         </SelectContent>
       </Select>
       </div>
-
-      {/* Blog Cards */}{filtered.length === 0 ? (
-  <p className="text-muted-foreground">No blogs found in this category.</p>
-) : (
-  <CardBlog data={filtered} />
-)}
+      {
+        loading?<div className='w-[100vw]'> <CardBlogSkeleton/></div>  :(  filtered.length === 0 ? (
+        <p className="text-muted-foreground">No blogs found in this category.</p>
+      ) : (
+        <CardBlog data={filtered} />
+      ))
+    }
     </div>
   )
 }
