@@ -1,46 +1,37 @@
-'use client'
-import CarsBlogSkeleton from '../components/CardBlogSkeleton'
-import React, { useEffect, useState } from 'react'
-import Home from '../components/home'
-import BlogHero from '@/components/Hero'
+"use client";
 
-
-
+import React, { useEffect, useState } from "react";
+import BlogHero from "@/components/Hero";
+import Home from "../components/home";
+import CarsBlogSkeleton from "../components/CardBlogSkeleton";
 
 const Page = () => {
-  const [data, setdata] = useState()
-  const [loading, setLoading] = useState(true)
-  const fetchData = async()=>{
-    try{
-      const res = await fetch('/api')
-      if(!res.ok){
-        throw new Error('Failed to fetch data')
-      }else{
-        const data =await res.json()
-        console.log(data);
-        setLoading(false)
-        setdata(data.posts)
-        
-      }
-    }catch(er){
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch("/api");
+      if (!res.ok) throw new Error("Failed to fetch data");
+
+      const json = await res.json();
+      console.log(json);
+      setData(json.posts || []);
+    } catch (er) {
       console.log(er);
-      
+    } finally {
+      setLoading(false);
     }
-  }
-  useEffect(()=>{
- fetchData()
-},[])
- 
-    return (
-      <div className='w-full'>
-          {
-          loading ? 
-          <CarsBlogSkeleton/>
-          :
-          
-        <BlogHero data={data}/>
-        }
-            <div>
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <div className="w-full">
+      <BlogHero data={data || []} loading={loading} />
+
       <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 bg-muted/50">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -52,20 +43,11 @@ const Page = () => {
             </div>
           </div>
 
-        {
-          loading ? 
-          <CarsBlogSkeleton/>
-          :
-          <Home data={data} />
-        }
-         
+          {loading ? <CarsBlogSkeleton /> : <Home data={data} />}
         </div>
       </section>
     </div>
-      </div>
-    )
-  
-  
-}
+  );
+};
 
-export default Page
+export default Page;

@@ -5,28 +5,17 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import FeaturedPostsSlide from "./HeroFeature";
-import { ArrowRight, Bookmark, Sparkles } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight, Sparkles } from "lucide-react";
 
-export default function BlogHero({ data }) {
-  const [mounted, setMounted] = useState(false);
+export default function BlogHero({ data = [], loading }) {
   const [featuredPosts, setFeaturedPosts] = useState([]);
-  useEffect(() => {
-    setFeaturedPosts(data);
-  }, [data]);
-  useEffect(() => {
-    const filteredData = data.filter((post) => post.featured === true);
-    setFeaturedPosts(filteredData);
-  }, [data]);
-  console.log(featuredPosts);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+    if (!loading && Array.isArray(data)) {
+      const filteredData = data.filter((post) => post.featured === true);
+      setFeaturedPosts(filteredData);
+    }
+  }, [data, loading]);
 
   return (
     <section className="relative overflow-hidden bg-background flex items-center justify-center flex-col py-20 md:py-32 px-4 lg:px-8 lg:h-[90vh]">
@@ -43,6 +32,7 @@ export default function BlogHero({ data }) {
 
       <div className="container px-4 md:px-6">
         <div className="grid gap-12 md:grid-cols-2 md:gap-16">
+          {/* Text Section */}
           <div className="flex flex-col justify-center items-center space-y-4">
             <div className="space-y-2">
               <motion.div
@@ -79,35 +69,39 @@ export default function BlogHero({ data }) {
               </motion.p>
             </div>
 
-<div className="w-full flex justify-start min-[1500px]:px-8">
-
-
-            <motion.div
-              className="flex flex-col gap-2 min-[400px]:flex-row"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+            {/* Subscribe Form */}
+            <div className="w-full flex justify-start min-[1500px]:px-8">
+              <motion.div
+                className="flex flex-col gap-2 min-[400px]:flex-row"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
               >
-              <div className="flex max-w-md">
-                <Input placeholder="Enter your email" type="email" />
-              </div>
-              <Button className="group transition-all duration-300">
-                Subscribe
-                <ArrowRight className="ml-2 h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-            </motion.div>
-              </div>
+                <div className="flex max-w-md">
+                  <Input placeholder="Enter your email" type="email" />
+                </div>
+                <Button className="group transition-all duration-300">
+                  Subscribe
+                  <ArrowRight className="ml-2 h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+              </motion.div>
+            </div>
           </div>
+
+          {/* Featured Posts */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-           {featuredPosts.length > 0 && (
-  <FeaturedPostsSlide filteredDatas={featuredPosts} />
-)}
-
+            {!loading && featuredPosts.length > 0 ? (
+              <FeaturedPostsSlide filteredDatas={featuredPosts} />
+            ) : (
+              <div className="w-full h-64 flex items-center justify-center text-muted-foreground">
+                Loading featured posts...
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
