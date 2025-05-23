@@ -1,6 +1,6 @@
 export default function SkeletonBlogCard() {
   return (
-    <div className="max-w-3xl mx-auto border">
+    <div className="max-w-3xl mx-auto border rounded-2xl">
       <div className="rounded-2xl bg-black text-white p-8 overflow-hidden">
         <div className="space-y-4">
           {/* Category skeleton */}
