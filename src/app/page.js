@@ -3,7 +3,7 @@ import CarsBlogSkeleton from '../components/CardBlogSkeleton'
 import React, { useEffect, useState } from 'react'
 import Home from '../components/home'
 import BlogHero from '@/components/Hero'
-import Link from 'next/link'
+
 
 
 

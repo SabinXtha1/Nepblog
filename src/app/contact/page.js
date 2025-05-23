@@ -22,7 +22,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
+// export const metadata = {
+//   title: 'Contact Us | Blog Insights',
+//   description: 'Get in touch with Blog Insights. Contact us for questions, collaborations, or support. Reach out via our contact form, email, phone, or social media.',
+//   openGraph: {
+//     title: 'Contact Us | Blog Insights',
+//     description: 'Get in touch with Blog Insights. Contact us for questions, collaborations, or support. Reach out via our contact form, email, phone, or social media.',
+//     type: 'website',
+//     url: '/contact',
+//   },
+//   twitter: {
+//     card: 'summary_large_image',
+//     title: 'Contact Us | Blog Insights',
+//     description: 'Get in touch with Blog Insights. Contact us for questions, collaborations, or support.',
+//   },
+// };
 export default function ContactPage() {
   const [formState, setFormState] = useState({
     name: "",
