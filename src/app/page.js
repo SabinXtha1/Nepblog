@@ -29,7 +29,7 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-[100vh] md:min-h-auto">
       <BlogHero data={data || []} loading={loading} />
 
       <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 bg-muted/50">

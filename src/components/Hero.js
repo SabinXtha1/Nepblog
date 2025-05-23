@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import FeaturedPostsSlide from "./HeroFeature";
 import { ArrowRight, Sparkles } from "lucide-react";
+import SkeletonBlogCard from './GenerateHeroSke';
 
 export default function BlogHero({ data = [], loading }) {
   const [featuredPosts, setFeaturedPosts] = useState([]);
@@ -98,9 +99,7 @@ export default function BlogHero({ data = [], loading }) {
             {!loading && featuredPosts.length > 0 ? (
               <FeaturedPostsSlide filteredDatas={featuredPosts} />
             ) : (
-              <div className="w-full h-64 flex items-center justify-center text-muted-foreground">
-                Loading featured posts...
-              </div>
+              <SkeletonBlogCard/>
             )}
           </motion.div>
         </div>
