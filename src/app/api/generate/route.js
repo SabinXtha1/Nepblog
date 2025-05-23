@@ -33,6 +33,7 @@ console.log(imageUrl2,"IMG");
       authorName: "SΛB1ΩИ",
       authorImage: "/allien.webp",
       category: jsonData.category,
+      featured:jsonData.featured,
       images:jsonData.images,
       readTime:jsonData.readTime
     });

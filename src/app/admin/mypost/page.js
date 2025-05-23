@@ -21,13 +21,13 @@ const Page = () => {
 const handleDelete = async (blogId) => {
   try {
     const res = await axios.delete('/api/ok', {
-      data: { blogId }, // body goes here
+      data: { blogId },
     });
 
     if (res.status === 200) {
       toast.success("Post Deleted");
 
-      // Optionally update UI
+     
       setPosts((prev) => prev.filter((post) => post._id !== blogId));
       setRegularPosts((prev) => prev.filter((post) => post._id !== blogId));
       if (featuredPost && featuredPost._id === blogId) {
