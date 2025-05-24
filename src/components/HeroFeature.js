@@ -11,26 +11,33 @@ import { Button } from "./ui/button"
 export default function FeaturedPostsSlider({ autoSlideInterval = 5000, className = "", filteredDatas }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const time =Math.floor(Math.random() * 8) + 3
+  const time = Math.floor(Math.random() * 8) + 3
   const [direction, setDirection] = useState(1) // 1 for right, -1 for left
   const containerRef = useRef(null)
 
+  // ✅ Sort and slice to get the latest 5 posts
+  const sortedFilteredDatas = [...filteredDatas]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 5)
+
   const nextSlide = useCallback(() => {
-    setDirection(1) // Moving right
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % filteredDatas.length)
-  }, [filteredDatas])
+    setDirection(1)
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % sortedFilteredDatas.length)
+  }, [sortedFilteredDatas])
 
   const prevSlide = useCallback(() => {
-    setDirection(-1) // Moving left
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? filteredDatas.length - 1 : prevIndex - 1))
-  }, [filteredDatas])
+    setDirection(-1)
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? sortedFilteredDatas.length - 1 : prevIndex - 1
+    )
+  }, [sortedFilteredDatas])
 
   const goToSlide = useCallback(
     (index) => {
       setDirection(index > currentIndex ? 1 : -1)
       setCurrentIndex(index)
     },
-    [currentIndex],
+    [currentIndex]
   )
 
   const handleWheel = useCallback(
@@ -42,7 +49,7 @@ export default function FeaturedPostsSlider({ autoSlideInterval = 5000, classNam
         prevSlide()
       }
     },
-    [nextSlide, prevSlide],
+    [nextSlide, prevSlide]
   )
 
   const handleDragEnd = useCallback(
@@ -54,10 +61,9 @@ export default function FeaturedPostsSlider({ autoSlideInterval = 5000, classNam
         prevSlide()
       }
     },
-    [nextSlide, prevSlide],
+    [nextSlide, prevSlide]
   )
 
-  // ✅ Auto slide with pause on hover
   useEffect(() => {
     if (isPaused) return
     const interval = setInterval(() => {
@@ -67,7 +73,6 @@ export default function FeaturedPostsSlider({ autoSlideInterval = 5000, classNam
     return () => clearInterval(interval)
   }, [nextSlide, autoSlideInterval, isPaused])
 
-  // ✅ Mouse wheel scrolling
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -79,19 +84,16 @@ export default function FeaturedPostsSlider({ autoSlideInterval = 5000, classNam
     }
   }, [handleWheel])
 
-  // ✅ Reset currentIndex if out of bounds (e.g. after filtering)
   useEffect(() => {
-    if (currentIndex >= filteredDatas.length) {
+    if (currentIndex >= sortedFilteredDatas.length) {
       setCurrentIndex(0)
     }
-  }, [filteredDatas, currentIndex])
+  }, [sortedFilteredDatas, currentIndex])
 
-  // ✅ Guard against undefined or empty list
-  if (!filteredDatas || filteredDatas.length === 0) return null
+  if (!sortedFilteredDatas || sortedFilteredDatas.length === 0) return null
 
-  const currentPost = filteredDatas[currentIndex]
+  const currentPost = sortedFilteredDatas[currentIndex]
 
-  // Animation variants based on direction
   const slideVariants = {
     enter: (direction) => ({
       x: direction > 0 ? 300 : -300,
@@ -154,10 +156,7 @@ export default function FeaturedPostsSlider({ autoSlideInterval = 5000, classNam
                     <span className="text-sm">{currentPost.authorName}</span>
                   </Link>
                   <span className="text-xs text-muted-foreground">
-                    {
-                        currentPost.readTime?(`${currentPost.readTime} read`):
-                    `${time} min read`
-                    }
+                    {currentPost.readTime ? `${currentPost.readTime} read` : `${time} min read`}
                   </span>
                 </div>
                 <div className="mt-4">
@@ -165,11 +164,8 @@ export default function FeaturedPostsSlider({ autoSlideInterval = 5000, classNam
                     href={`/blog/${currentPost._id}`}
                     className="inline-flex items-center text-sm font-medium text-primary group transition-all duration-300"
                   >
-                
                     Read article
-                <ArrowRight className="ml-2 h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" />
-        
-                    
+                    <ArrowRight className="ml-2 h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                 </div>
               </CardContent>
@@ -180,7 +176,7 @@ export default function FeaturedPostsSlider({ autoSlideInterval = 5000, classNam
 
       {/* Dots */}
       <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 space-x-2">
-        {filteredDatas.map((_, index) => (
+        {sortedFilteredDatas.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
