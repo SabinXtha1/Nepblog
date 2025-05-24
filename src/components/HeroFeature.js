@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { Button } from "./ui/button"
+
 
 export default function FeaturedPostsSlider({ autoSlideInterval = 5000, className = "", filteredDatas }) {
   const [currentIndex, setCurrentIndex] = useState(0)
