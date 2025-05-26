@@ -75,6 +75,8 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4156883720393070"
+     crossorigin="anonymous"></script>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />
             <ToastContainer />
