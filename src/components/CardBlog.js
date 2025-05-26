@@ -43,7 +43,7 @@ const CardBlog = ({ data, total }) => {
             />
           </div>
         </div>
-      <Link href={`profile/${item.author}`}>
+      <Link href={`/profile/${item.author}`}>
         <div className="flex items-center px-4 pt-2 gap-3">
           {item.authorName !== "" && item.authorImage ? (
             <Avatar>
