@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+# 🇳🇵 NepBlog
+
+A modern and clean blog platform built for sharing insights, tutorials, and stories—especially focused on Nepali tech enthusiasts and content creators.
+
+🌐 [Visit Website](https://nepblog.vercel.app)
+
+## ✨ Features
+
+- 📝 Clean, minimal blog layout
+- 📱 Responsive design for all devices
+- 🔍 SEO optimized pages with dynamic metadata
+- 💬 Comment system (Clerk integrated)
+- 🔗 Easy social sharing
+- 🧠 Developer-focused UI
+- 🇳🇵 Focus on Nepali content and developers
+
+## 🧰 Tech Stack
+
+- **Frontend:** [Next.js](https://nextjs.org/)
+- **Styling:** Tailwind CSS,Shadcn UI
+- **Authentication:** Clerk (for comments)
+- **Deployment:** Vercel
+- **Markdown Support:** MDX or similar (if used)
+
+## 🚀 Getting Started
+![Screenshot 2025-05-29 001916](https://github.com/user-attachments/assets/5cc08330-3875-4ef5-8786-4b4d0945622a)
+![Screenshot 2025-05-29 001958](https://github.com/user-attachments/assets/7e395de5-d20d-4f9e-84d0-df8a0fcd0399)
+![Screenshot 2025-05-29 001943](https://github.com/user-attachments/assets/70c13511-ba9f-41c1-b389-920eb4067cd4)
+![Screenshot 2025-05-29 002027](https://github.com/user-attachments/assets/e8a8232d-2962-45f2-8937-e761eac18d3e)
+
 
 ```bash
+# Clone the repo
+git clone https://github.com/yourusername/nepblog.git
+cd nepblog
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+🤝 Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Contributions, issues, and feature requests are welcome! Feel free to open a PR.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Made with ❤️ in Nepal by Sabin Nayaju
