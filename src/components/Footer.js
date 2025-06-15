@@ -58,7 +58,7 @@ export default function ModernFooter() {
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Company
+              NepBlog
             </motion.h3>
             <p className="text-gray-300 max-w-xs">Building better experiences.</p>
             <div className="flex space-x-4 pt-2">
